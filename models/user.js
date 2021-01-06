@@ -12,7 +12,8 @@ const userSchema = new Schema({
     password: String,
     application: [],
     savedJobSearch: [],
-})
+    timestamps: true,
+});
 
 const applicationSchema = new Schema({
     companyName: String,
@@ -21,10 +22,14 @@ const applicationSchema = new Schema({
     interviewDate: Date,
     contactName: String,
     notes: [],
+    timestamps: true,
 });
 
 const jobSearch = new Schema({
-    companyName: String,
+    companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
     jobTitle: String,
     location: String,
-})
+    timestamps: true,
+});
+
+module.exports = mongoose.model('User', userSchema);
