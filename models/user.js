@@ -10,8 +10,8 @@ const userSchema = new Schema({
         unique: true,
     },
     password: String,
-    application: [],
-    savedJobSearch: [],
+    applications: [applicationSchema],
+    savedJobSearches: [jobSearchSchema],
     timestamps: true,
 });
 
@@ -25,7 +25,7 @@ const applicationSchema = new Schema({
     timestamps: true,
 });
 
-const jobSearch = new Schema({
+const jobSearchSchema = new Schema({
     companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
     jobTitle: String,
     location: String,
