@@ -9,14 +9,15 @@ const applicationSchema = new Schema({
     dateApplied: Date,
     interviewDate: Date,
     contactName: String,
-    notes: [],
+    notes: String,
 }, {timestamps: true}
 );
 
 const jobSearchSchema = new Schema({
     companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
     jobTitle: String,
-    location: String,
+    city: String,
+    state: String,
 }, {timestamps: true}
 );
 
@@ -25,6 +26,7 @@ const userSchema = new Schema({
     lastName: String,
     email: {
         type: String,
+        required: true,
         unique: true,
         lowercase: true,
     },
