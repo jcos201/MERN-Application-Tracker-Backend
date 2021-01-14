@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
 
 const applicationSchema = new Schema({
-    companyName: String,
+    companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
     jobTitle: String,
     dateApplied: Date,
     interviewDate: Date,
@@ -14,10 +14,10 @@ const applicationSchema = new Schema({
 );
 
 const jobSearchSchema = new Schema({
-    companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
+    companyName: String,
     jobTitle: String,
     city: String,
-    state: String,
+    state1: String,
 }, {timestamps: true}
 );
 
