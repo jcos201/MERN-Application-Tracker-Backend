@@ -35,13 +35,7 @@ async function login(req, res) {
     }
 };
 
-async function showAllAppListings(req,res){
 
-};
-
-async function addAppListing(req, res){
-
-};
 
 function createJWT(user) {
     return jwt.sign({ user }, SECRET, { expiresIn: '24h'});
