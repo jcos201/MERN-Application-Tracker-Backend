@@ -8,8 +8,10 @@ router.post('/signup', usersCtrl.signup);
 router.post('/login', usersCtrl.login);
 
 router.post('/addapplication', applicationsCtrl.addAppListing);
+router.get('/applications/:id' , applicationsCtrl.showAllAppListings);
 
 router.post('/addSearch', jobSearchCtrl.addSearch);
+
 
 
 
