@@ -1,3 +1,4 @@
+const { findOne } = require('../models/user');
 const User = require('../models/user');
 
 module.exports = {
@@ -44,18 +45,51 @@ async function addAppListing(req, res){
         res.status(400).json({err: 'bad request'});
     }
 
-
-
-
-
 };
 
 async function updateAppListing(req, res){
+    console.log('inside update Listing');
+    try {
+        const user = await findUser(req.user.email);
+        if(!user) return res.status(401).json( {err: 'bad credentials'} );
+
+        const application = await findOneApplication(user, req.params.id);
+        if(!application) return res.status(401).json( {err: 'cannot find application'} );
+        
+        indx = await user.applications.indexOf(application);
+        user.applications.splice(indx, 1, req.body);
+        await user.save();
+        const applicationArray = user.applications;
+        res.json({ applicationArray });
+
+        //console.log('updated application:')
+        //console.log(user.applications[indx])
+    } catch (error) {
+        res.status(400).json({err: 'bad request to update Listing'})
+    }
+
+
 
 };
 
 async function deleteAppListing(req, res){
+    console.log('reached deletion function');
+    try {
+        const user = await findUser(req.user.email);
+        if(!user) return res.status(401).json( {err: 'bad credentials'} );
 
+        const application = await findOneApplication(user, req.params.id);
+        if(!application) return res.status(401).json( {err: 'cannot find application'} );
+        
+        indx = await user.applications.indexOf(application);
+        user.applications.splice(indx, 1);
+        await user.save();
+        const applicationArray = user.applications;
+        res.json({ applicationArray });
+        
+    } catch (error) {
+        res.status(400).json( {err: 'bad deletion request'} )
+    }
 };
 
 async function showOneListing(req, res) {
@@ -63,11 +97,11 @@ async function showOneListing(req, res) {
     try {
         const user = await User.findOne({ email: req.user.email });
         if(!user) return res.status(401).json({err: 'bad credentials'});
-        console.log('application id from req.body');
-        console.log(req.params.id);
+        //console.log('application id from req.body');
+        //console.log(req.params.id);
         const listing = await user.applications.find( application =>  application._id == req.params.id);
         if(!listing) return res.status(401).json({err: 'bad application credentials'});
-        console.log(listing)
+        //console.log(listing)
         res.json({ listing });
         
     } catch (error) {
@@ -76,4 +110,12 @@ async function showOneListing(req, res) {
     }
 
 
+}
+
+function findOneApplication(user, applicationId) {
+    return user.applications.find( application =>  application._id == applicationId);
+}
+
+function findUser(userEmail) {
+    return User.findOne({ email: userEmail });
 }
