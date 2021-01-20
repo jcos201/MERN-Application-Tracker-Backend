@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
 
 const applicationSchema = new Schema({
-    companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
+    //companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
+    companyName: String,
     jobTitle: String,
     dateApplied: Date,
     interviewDate: Date,
@@ -14,8 +15,7 @@ const applicationSchema = new Schema({
 );
 
 const jobSearchSchema = new Schema({
-    companyName: String,
-    jobTitle: String,
+    jobKeyword: String,
     city: String,
     state1: String,
 }, {timestamps: true}
@@ -45,7 +45,6 @@ userSchema.set('toJSON', {
 
 userSchema.pre('save', function(next) {
     const user = this;
-    console.log('inside pre')
     if(!user.isModified("password")) return next();
     bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash) {
         if(err) return next(err);
