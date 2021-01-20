@@ -12,7 +12,7 @@ router.post('/addapplication', applicationsCtrl.addAppListing);
 router.get('/applications' , applicationsCtrl.showAllAppListings);
 router.get('/applications/:id', applicationsCtrl.showOneListing);
 router.put('/applications/:id', applicationsCtrl.updateAppListing);
-router.delete('delete/:id', applicationsCtrl.deleteAppListing);
+router.delete('/delete/:id', applicationsCtrl.deleteAppListing);
 
 
 router.post('/addSearch', jobSearchCtrl.addSearch);
