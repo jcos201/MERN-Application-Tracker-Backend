@@ -1,23 +1,43 @@
-const { findOne } = require('../models/user');
 const User = require('../models/user');
+const CompanyName = require('../models/companyName');
+
 
 module.exports = {
-    showAllAppListings,
     addAppListing,
+    showAllAppListings,
     updateAppListing,
     deleteAppListing,
     showOneListing,
 }
 
-async function showAllAppListings(req,res){
+async function addAppListing(req, res){
+    console.log('got to addAppListing');
+
     try {
-        //console.log('inside showAllAppListings')
-        //console.log(req.body);
         const user = await User.findOne({ email: req.user.email });
         if(!user) return res.status(401).json({err: 'bad credentials'});
 
-       // console.log('application array:')
-        //console.log(user.applications)
+        const compName = req.body.companyName;
+        await saveCompany(compName);
+
+        user.applications.push(req.body);
+        await user.save();
+
+        const applicationArray = user.applications;
+        res.json({ applicationArray });
+        
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({err: 'bad request'});
+    }
+
+};
+
+async function showAllAppListings(req,res){
+    try {
+        const user = await User.findOne({ email: req.user.email });
+        if(!user) return res.status(401).json({err: 'bad credentials'});
+
         const applicationArray = user.applications;
         res.json({ applicationArray })
     } catch (error) {
@@ -26,26 +46,6 @@ async function showAllAppListings(req,res){
 
 };
 
-async function addAppListing(req, res){
-    console.log('got to addAppListing');
-    console.log('req.body')
-    console.log(req.body)
-    try {
-        const user = await User.findOne({ email: req.user.email });
-        if(!user) return res.status(401).json({err: 'bad credentials'});
-        user.applications.push(req.body);
-        await user.save();
-        const applicationArray = user.applications;
-        //console.log('user applications')
-        //console.log(applicationArray);
-       // const token = req.body.token;
-        res.json({ applicationArray });
-        
-    } catch (error) {
-        res.status(400).json({err: 'bad request'});
-    }
-
-};
 
 async function updateAppListing(req, res){
     console.log('inside update Listing');
@@ -55,15 +55,17 @@ async function updateAppListing(req, res){
 
         const application = await findOneApplication(user, req.params.id);
         if(!application) return res.status(401).json( {err: 'cannot find application'} );
-        
+
+
         indx = await user.applications.indexOf(application);
         user.applications.splice(indx, 1, req.body);
         await user.save();
+        const compName = req.body.companyName;
+        await saveCompany(compName);
+
         const applicationArray = user.applications;
         res.json({ applicationArray });
 
-        //console.log('updated application:')
-        //console.log(user.applications[indx])
     } catch (error) {
         res.status(400).json({err: 'bad request to update Listing'})
     }
@@ -110,6 +112,14 @@ async function showOneListing(req, res) {
     }
 
 
+}
+
+async function saveCompany(name) {
+    let found = await CompanyName.find( {name} );
+    console.log(found)
+    if(found.length == 0) {
+        await CompanyName.create({name}).save()
+    }
 }
 
 function findOneApplication(user, applicationId) {
