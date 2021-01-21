@@ -8,6 +8,7 @@ module.exports = {
     updateAppListing,
     deleteAppListing,
     showOneListing,
+    getCompanyNames,
 }
 
 async function addAppListing(req, res){
@@ -108,15 +109,27 @@ async function showOneListing(req, res) {
         
     } catch (error) {
         res.status(400).json({err: 'bad request'})
-
     }
+}
 
+async function getCompanyNames(req,res){
+    console.log('inside getCompanyNames');
+    let companyArray =[];
+    await CompanyName.find({}, (err, companies) => {
+        if(err) { return res.status(401).json({ err: 'bad company name request'}) }
+        companies.map(company => {
+            console.log(company.name)
+            companyArray.push(company.name)
+        })
+        console.log(companyArray)
+        res.json(companyArray) 
+    });
 
 }
 
 async function saveCompany(name) {
     let found = await CompanyName.find( {name} );
-    console.log(found)
+    //console.log(found)
     if(found.length == 0) {
         await CompanyName.create({name}).save()
     }

@@ -22,7 +22,7 @@ router.get('/savedsearches/:id', jobSearchCtrl.showOneSearch);
 router.delete('/deletesearch/:id', jobSearchCtrl.deleteSearch);
 
 //company names in listing route
-
+router.get('/companynames', applicationsCtrl.getCompanyNames)
 
 
 module.exports = router; 
