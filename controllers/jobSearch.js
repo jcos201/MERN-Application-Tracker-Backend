@@ -11,7 +11,8 @@ async function addSearch(req, res){
     console.log('reached addSearch');
     try {
         const user = await findUser(req.user.email);
-        if(!user) return res.status(401).json( {err: 'bad credentials'})
+        if(!user) return res.status(401).json( {err: 'bad credentials'});
+
         user.savedJobSearches.push(req.body);
         await user.save();
 
@@ -29,7 +30,7 @@ async function showAllSearches(req,res){
         const user = await findUser(req.user.email);
         if(!user) return res.status(401).json( {err: 'bad credentials'} );
         const jobSearchArray = user.savedJobSearches;
-        console.log(jobSearchArray)
+
         res.json({ jobSearchArray });
     } catch (error) {
         res.status(400).json( {err: 'bad job search addition request'});
@@ -45,7 +46,7 @@ async function showOneSearch(req,res){
 
         const searchListing = await findOneJobSearch(user, req.params.id);
         if(!searchListing) return status(401).json( {err: 'bad search credentials'});
-        console.log(searchListing)
+
         res.json({ searchListing });
     } catch (error) {
         res.status(400).json( {err: 'bad job search id request'})
@@ -58,18 +59,17 @@ async function deleteSearch(req,res){
     try {
         const user = await findUser(req.user.email);
         if(!user) return res.status(401).json( {err: 'bad credentials'} );
-console.log('user'); console.log(user)
+
         const searchListing = await findOneJobSearch(user, req.params.id);
         if(!searchListing) return res.status(401).json( {err: 'cannot find saved job search'} );
+
         indx = await user.savedJobSearches.indexOf(searchListing);
         user.savedJobSearches.splice(indx,1);
         await user.save();
-console.log('updated User'); console.log(user)
 
         const jobSearchArray = user.savedJobSearches;
         res.json({ jobSearchArray });
     } catch (error) {
-        console.log(error)
         res.status(400).json( {err: 'bad search delete request'} );
     }
 }
