@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
 
 const applicationSchema = new Schema({
-    //companyName: [{type: Schema.Types.ObjectId, ref: 'CompanyName'}],
     companyName: String,
     jobTitle: String,
     dateApplied: Date,
