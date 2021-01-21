@@ -8,6 +8,7 @@ require('./config/database');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(require('cors')());
+
 app.use(require('./config/auth'));
 
 app.use('/users', require('./routes/users'));
