@@ -131,7 +131,8 @@ async function saveCompany(name) {
     let found = await CompanyName.find( {name} );
     //console.log(found)
     if(found.length == 0) {
-        await CompanyName.create({name}).save()
+        await CompanyName.create({name});
+        await CompanyName.save();
     }
 }
 
