@@ -13,6 +13,10 @@ async function addSearch(req, res){
         const user = await findUser(req.user.email);
         if(!user) return res.status(401).json( {err: 'bad credentials'});
 
+        console.log(req.body)
+
+        if(!req.body.jobKeyword && !req.body.city && !req.body.state1)  return res.status(401).json( {err: 'no data entered'});
+
         user.savedJobSearches.push(req.body);
         await user.save();
 
