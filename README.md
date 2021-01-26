@@ -22,20 +22,20 @@ This app can be used to track all the job applications submitted during a job se
 * Application / Job Search info will persist even after you've logged out
 
 ## Entity Relationship Diagram
-![ERD Screenshot - 1 User can have Many Applications](./public/Project3_ERD.png) 
+![ERD Screenshot - 1 User can have Many Applications](./Project3_ERD.png) 
 
 ## Wireframe
 ![Home Screen Wireframe](./homePage.png) 
 
-![User Dashboard Wireframe](./public/dashboard.png) 
+![User Dashboard Wireframe](./dashboard.png) 
 
-![Application Listings Screen Wireframe](./public/allApplications.png) 
+![Application Listings Screen Wireframe](./allApplications.png) 
 
-![Application Add / Edit Screen Wireframe](./public/AddEditApplications.png) 
+![Application Add / Edit Screen Wireframe](./AddEditApplications.png) 
 
-![Job Search Landing Page Wireframe](./public/JobSearchLanding.png) 
+![Job Search Landing Page Wireframe](./JobSearchLanding.png) 
 
-![Saved Job Search Page Wireframe](./public/SavedJobSearch.png) 
+![Saved Job Search Page Wireframe](./SavedJobSearch.png) 
 
 ## Technologies Used
 * MongoDB
