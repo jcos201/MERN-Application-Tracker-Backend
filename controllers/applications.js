@@ -132,7 +132,6 @@ async function saveCompany(name) {
     //console.log(found)
     if(found.length == 0) {
         await CompanyName.create({name});
-        await CompanyName.save();
     }
 }
 
