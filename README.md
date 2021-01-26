@@ -25,7 +25,7 @@ This app can be used to track all the job applications submitted during a job se
 ![ERD Screenshot - 1 User can have Many Applications](./public/Project3_ERD.png) 
 
 ## Wireframe
-![Home Screen Wireframe](./public/homePage.png) 
+![Home Screen Wireframe](./homePage.png) 
 
 ![User Dashboard Wireframe](./public/dashboard.png) 
 
